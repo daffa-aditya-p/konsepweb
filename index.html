@@ -1,0 +1,2488 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Observasi Ruangan Sekolah — Kelompok 5</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Pannellum CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --warning: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --dark: #1a1d29;
+            --darker: #0f1419;
+            --light: #f8fafc;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-dark: rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 25px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.04);
+            --sidebar-width: 320px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            overflow-x: hidden;
+        }
+
+        /* Advanced Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-animation {
+            text-align: center;
+            color: white;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Floating Particles Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+        }
+
+        /* Advanced Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(180deg, var(--dark) 0%, var(--darker) 100%);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            transform: translateX(-100%);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1000;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)" /></svg>');
+            pointer-events: none;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: 800;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .sidebar-title {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-subtitle {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 2px;
+            width: 75%;
+            animation: progressMove 2s ease-in-out infinite;
+        }
+
+        @keyframes progressMove {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-left: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-item:hover::before {
+            left: 100%;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: var(--white);
+            background: rgba(255,255,255,0.1);
+            border-left-color: #4facfe;
+            transform: translateX(5px);
+        }
+
+        .nav-item i {
+            margin-right: 1rem;
+            width: 20px;
+            font-size: 1.1rem;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--secondary);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Header dengan Glass Effect */
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .menu-toggle {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            width: 50px;
+            height: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .menu-toggle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .menu-toggle:hover::before {
+            width: 100px;
+            height: 100px;
+        }
+
+        .menu-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid #e2e8f0;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: rotate(180deg);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content.sidebar-open {
+            margin-left: var(--sidebar-width);
+        }
+
+        /* Content Sections dengan Advanced Animations */
+        .content-section {
+            display: none;
+            flex: 1;
+            padding: 2rem;
+            animation: sectionSlideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes sectionSlideIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px) scale(0.95);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Hero Section dengan Parallax */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            padding: 5rem 3rem;
+            text-align: center;
+            border-radius: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: heroFloat 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes heroFloat {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-10px, -10px) rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ffffff, #f0f9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            animation: heroTextGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes heroTextGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-hero:hover::before {
+            left: 100%;
+        }
+
+        .btn-hero:hover {
+            color: white;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border-color: rgba(255,255,255,0.6);
+        }
+
+        .btn-hero.primary {
+            background: rgba(255,255,255,0.9);
+            color: #667eea;
+        }
+
+        /* Stats Counter */
+        .stats-section {
+            margin: 3rem 0;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        /* Advanced Search */
+        .search-container {
+            margin-bottom: 3rem;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.25rem 1.5rem 1.25rem 4rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 25px;
+            font-size: 1.1rem;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: var(--shadow-md);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1), var(--shadow-lg);
+            transform: scale(1.02);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .search-filters {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255,255,255,0.8);
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 20px;
+            padding: 0.5rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: transparent;
+            transform: scale(1.05);
+        }
+
+        /* Room Cards dengan Advanced Effects */
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+        }
+
+        .room-card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+        }
+
+        .room-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .room-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .room-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .room-card:hover::before {
+            opacity: 1;
+        }
+
+        .room-image-container {
+            position: relative;
+            overflow: hidden;
+            height: 250px;
+        }
+
+        .room-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .room-image:hover {
+            transform: scale(1.1);
+        }
+
+        .room-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .room-image:hover + .room-overlay,
+        .room-overlay:hover {
+            opacity: 1;
+        }
+
+        .room-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+        }
+
+        .room-content {
+            padding: 2rem;
+            position: relative;
+        }
+
+        .room-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .room-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .room-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-tag {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .room-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-360,
+        .btn-gallery {
+            flex: 1;
+            border: none;
+            border-radius: 16px;
+            padding: 0.875rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-360 {
+            background: var(--accent);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-gallery {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .btn-360:hover,
+        .btn-gallery:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-360:hover {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .btn-gallery:hover {
+            background: var(--primary);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: var(--shadow-lg);
+            height: 250px;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03) rotate(1deg);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 2rem 1.5rem 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .team-member {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-member::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--secondary);
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+            color: white;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover .team-avatar {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .team-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .team-role {
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Modals dengan Backdrop Blur */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            position: relative;
+            margin: 2% auto;
+            max-width: 95%;
+            max-height: 90%;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            animation: modalSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modalSlideIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(-50px) scale(0.9); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        .modal img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0,0,0,0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .close:hover {
+            background: rgba(0,0,0,0.8);
+            transform: scale(1.1);
+        }
+
+        /* 360 Viewer */
+        .viewer-360 {
+            width: 100%;
+            height: 70vh;
+            border-radius: 20px;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="footerGrid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23footerGrid)" /></svg>');
+            pointer-events: none;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            :root {
+                --sidebar-width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .main-content {
+                margin-left: 0 !important;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .rooms-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            transform: translateY(100px);
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            --light: #1a1d29;
+            --text-primary: #e2e8f0;
+            --text-secondary: #a0aec0;
+        }
+
+        .dark-mode body {
+            background: linear-gradient(135deg, #1a1d29 0%, #2d3748 100%);
+        }
+
+        .dark-mode .hero {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+        }
+
+        /* Pulse Animation */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-animation">
+            <div class="spinner"></div>
+            <h3>Memuat Observasi...</h3>
+            <p>Kelompok 5</p>
+        </div>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-container">
+                <div class="logo">K5</div>
+                <div>
+                    <div class="sidebar-title">LHO Ruangan</div>
+                    <div class="sidebar-subtitle">Kelompok 5 — 2024</div>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#home" class="nav-item active" data-section="home">
+                <i class="fas fa-home"></i>
+                Beranda
+                <span class="nav-badge">New</span>
+            </a>
+            <a href="#rooms" class="nav-item" data-section="rooms">
+                <i class="fas fa-door-open"></i>
+                Daftar Ruangan
+                <span class="nav-badge">15+</span>
+            </a>
+            <a href="#gallery" class="nav-item" data-section="gallery">
+                <i class="fas fa-images"></i>
+                Galeri Foto
+                <span class="nav-badge">50+</span>
+            </a>
+            <a href="#about" class="nav-item" data-section="about">
+                <i class="fas fa-users"></i>
+                Tim Kelompok
+                <span class="nav-badge">6</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <header class="header" id="header">
+            <div class="header-content">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Home Section -->
+        <section class="content-section active" id="home">
+            <div class="hero" data-aos="fade-up">
+                <div class="hero-content">
+                    <h1>Laporan Observasi Ruangan Sekolah</h1>
+                    <p>Dokumentasi komprehensif dengan teknologi 360° dan analisis mendalam untuk evaluasi infrastruktur pendidikan</p>
+                    <div class="hero-buttons">
+                        <a href="#rooms" class="btn-hero primary" data-section="rooms">
+                            <i class="fas fa-rocket"></i>
+                            Jelajahi Ruangan
+                        </a>
+                        <a href="#gallery" class="btn-hero" data-section="gallery">
+                            <i class="fas fa-camera"></i>
+                            Lihat Galeri
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-section" data-aos="fade-up" data-aos-delay="200">
+                <div class="stats-container">
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="stat-icon">
+                            <i class="fas fa-door-open"></i>
+                        </div>
+                        <div class="stat-number" data-count="18">0</div>
+                        <div class="stat-label">Ruangan Terobservasi</div>
+                    </div>
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="stat-icon">
+                            <i class="fas fa-vr-cardboard"></i>
+                        </div>
+                        <div class="stat-number" data-count="12">0</div>
+                        <div class="stat-label">Foto 360° Tersedia</div>
+                    </div>
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="500">
+                        <div class="stat-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <div class="stat-number" data-count="67">0</div>
+                        <div class="stat-label">Total Dokumentasi</div>
+                    </div>
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="600">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-number" data-count="6">0</div>
+                        <div class="stat-label">Anggota Tim</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container" data-aos="fade-up" data-aos-delay="700">
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100" style="border: none; border-radius: 20px; box-shadow: var(--shadow-lg); background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);">
+                            <div class="card-body text-center p-4">
+                                <div class="mb-3" style="width: 80px; height: 80px; background: var(--accent); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: var(--shadow-md);">
+                                    <i class="fas fa-microscope fa-2x text-white"></i>
+                                </div>
+                                <h5 class="card-title fw-bold">Observasi Detail</h5>
+                                <p class="card-text text-muted">Analisis mendalam setiap aspek ruangan dengan metode observasi sistematis</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100" style="border: none; border-radius: 20px; box-shadow: var(--shadow-lg); background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);">
+                            <div class="card-body text-center p-4">
+                                <div class="mb-3" style="width: 80px; height: 80px; background: var(--secondary); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: var(--shadow-md);">
+                                    <i class="fas fa-cube fa-2x text-white"></i>
+                                </div>
+                                <h5 class="card-title fw-bold">Teknologi 360°</h5>
+                                <p class="card-text text-muted">Pengalaman immersive dengan dokumentasi panorama berkualitas tinggi</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100" style="border: none; border-radius: 20px; box-shadow: var(--shadow-lg); background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);">
+                            <div class="card-body text-center p-4">
+                                <div class="mb-3" style="width: 80px; height: 80px; background: var(--success); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: var(--shadow-md);">
+                                    <i class="fas fa-chart-line fa-2x text-white"></i>
+                                </div>
+                                <h5 class="card-title fw-bold">Data Analytics</h5>
+                                <p class="card-text text-muted">Visualisasi data dan laporan komprehensif untuk pengambilan keputusan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rooms Section -->
+        <section class="content-section" id="rooms">
+            <div class="container">
+                <h2 class="mb-4 text-center" style="font-size: 3rem; font-weight: 900; background: var(--primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" data-aos="fade-up">Eksplorasi Ruangan</h2>
+                
+                <!-- Advanced Search -->
+                <div class="search-container" data-aos="fade-up" data-aos-delay="200">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" id="searchInput" placeholder="Cari ruangan berdasarkan nama, tipe, atau fasilitas..." onkeyup="filterRooms()">
+                    </div>
+                    <div class="search-filters">
+                        <button class="filter-btn active" data-filter="all">Semua</button>
+                        <button class="filter-btn" data-filter="kelas">Kelas</button>
+                        <button class="filter-btn" data-filter="laboratorium">Laboratorium</button>
+                        <button class="filter-btn" data-filter="fasilitas">Fasilitas</button>
+                        <button class="filter-btn" data-filter="has-360">Tersedia 360°</button>
+                    </div>
+                </div>
+
+                <div class="rooms-grid" id="roomsContainer">
+                    <!-- Room Card 1 -->
+                    <div class="room-card" data-room-name="kelas 1" data-room-type="kelas" data-has-360="true" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="room-image-container">
+                            <img src="/assets/kelas1.jpg" alt="Kelas 1" class="room-image" onclick="openModal('/assets/kelas1.jpg')">
+                            <div class="room-overlay">
+                                <i class="fas fa-search-plus"></i> Klik untuk memperbesar
+                            </div>
+                            <div class="room-badge">Premium</div>
+                        </div>
+                        <div class="room-content">
+                            <h5 class="room-title">Kelas 1A — Smart Classroom</h5>
+                            <p class="room-description">Ruang kelas modern dilengkapi dengan smart board interaktif, AC split, proyektor 4K, dan sistem audio surround untuk pengalaman belajar optimal.</p>
+                            <div class="room-features">
+                                <span class="feature-tag"><i class="fas fa-tv"></i> Smart Board</span>
+                                <span class="feature-tag"><i class="fas fa-snowflake"></i> AC</span>
+                                <span class="feature-tag"><i class="fas fa-video"></i> Proyektor</span>
+                                <span class="feature-tag"><i class="fas fa-volume-up"></i> Audio System</span>
+                            </div>
+                            <div class="room-actions">
+                                <button class="btn-360" onclick="open360Viewer('/assets/kelas1_360.jpg', 'Kelas 1A - 360°')">
+                                    <i class="fas fa-vr-cardboard"></i> Tour 360°
+                                </button>
+                                <button class="btn-gallery" onclick="openModal('/assets/kelas1.jpg')">
+                                    <i class="fas fa-expand"></i> Galeri
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Card 2 -->
+                    <div class="room-card" data-room-name="perpustakaan" data-room-type="fasilitas" data-has-360="true" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="room-image-container">
+                            <img src="/assets/perpustakaan.jpg" alt="Perpustakaan" class="room-image" onclick="openModal('/assets/perpustakaan.jpg')">
+                            <div class="room-overlay">
+                                <i class="fas fa-search-plus"></i> Klik untuk memperbesar
+                            </div>
+                            <div class="room-badge">Featured</div>
+                        </div>
+                        <div class="room-content">
+                            <h5 class="room-title">Perpustakaan Digital</h5>
+                            <p class="room-description">Pusat literasi modern dengan koleksi 15,000+ buku, e-library access, area baca yang nyaman, dan teknologi RFID untuk sistem peminjaman otomatis.</p>
+                            <div class="room-features">
+                                <span class="feature-tag"><i class="fas fa-book"></i> 15K+ Buku</span>
+                                <span class="feature-tag"><i class="fas fa-wifi"></i> WiFi</span>
+                                <span class="feature-tag"><i class="fas fa-desktop"></i> Komputer</span>
+                                <span class="feature-tag"><i class="fas fa-qrcode"></i> RFID System</span>
+                            </div>
+                            <div class="room-actions">
+                                <button class="btn-360" onclick="open360Viewer('/assets/perpustakaan_360.jpg', 'Perpustakaan Digital - 360°')">
+                                    <i class="fas fa-vr-cardboard"></i> Tour 360°
+                                </button>
+                                <button class="btn-gallery" onclick="openModal('/assets/perpustakaan.jpg')">
+                                    <i class="fas fa-expand"></i> Galeri
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Card 3 -->
+                    <div class="room-card" data-room-name="laboratorium komputer" data-room-type="laboratorium" data-has-360="false" data-aos="zoom-in" data-aos-delay="500">
+                        <div class="room-image-container">
+                            <img src="/assets/lab_komputer.jpg" alt="Lab Komputer" class="room-image" onclick="openModal('/assets/lab_komputer.jpg')">
+                            <div class="room-overlay">
+                                <i class="fas fa-search-plus"></i> Klik untuk memperbesar
+                            </div>
+                            <div class="room-badge">Tech Hub</div>
+                        </div>
+                        <div class="room-content">
+                            <h5 class="room-title">Lab Komputer & Coding</h5>
+                            <p class="room-description">Laboratorium teknologi informasi dengan 40 unit PC gaming spec, dual monitor setup, dan perangkat lunak development terkini untuk pembelajaran programming.</p>
+                            <div class="room-features">
+                                <span class="feature-tag"><i class="fas fa-desktop"></i> 40 PC</span>
+                                <span class="feature-tag"><i class="fas fa-code"></i> Dev Tools</span>
+                                <span class="feature-tag"><i class="fas fa-gamepad"></i> Gaming Spec</span>
+                                <span class="feature-tag"><i class="fas fa-tv"></i> Dual Monitor</span>
+                            </div>
+                            <div class="room-actions">
+                                <button class="btn-360" style="display:none;" onclick="open360Viewer('/assets/lab_komputer_360.jpg', 'Lab Komputer - 360°')">
+                                    <i class="fas fa-vr-cardboard"></i> Tour 360°
+                                </button>
+                                <button class="btn-gallery" onclick="openModal('/assets/lab_komputer.jpg')" style="flex: 1;">
+                                    <i class="fas fa-expand"></i> Lihat Detail
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Card 4 -->
+                    <div class="room-card" data-room-name="kantin" data-room-type="fasilitas" data-has-360="true" data-aos="zoom-in" data-aos-delay="600">
+                        <div class="room-image-container">
+                            <img src="/assets/kantin.jpg" alt="Kantin" class="room-image" onclick="openModal('/assets/kantin.jpg')">
+                            <div class="room-overlay">
+                                <i class="fas fa-search-plus"></i> Klik untuk memperbesar
+                            </div>
+                            <div class="room-badge">Food Court</div>
+                        </div>
+                        <div class="room-content">
+                            <h5 class="room-title">Food Court Modern</h5>
+                            <p class="room-description">Area makan bergaya food court dengan 8 tenant F&B, cashless payment system, tempat duduk 200 orang, dan standar kebersihan internasional.</p>
+                            <div class="room-features">
+                                <span class="feature-tag"><i class="fas fa-utensils"></i> 8 Tenant</span>
+                                <span class="feature-tag"><i class="fas fa-credit-card"></i> Cashless</span>
+                                <span class="feature-tag"><i class="fas fa-chair"></i> 200 Seats</span>
+                                <span class="feature-tag"><i class="fas fa-shield-alt"></i> Hygienic</span>
+                            </div>
+                            <div class="room-actions">
+                                <button class="btn-360" onclick="open360Viewer('/assets/kantin_360.jpg', 'Food Court Modern - 360°')">
+                                    <i class="fas fa-vr-cardboard"></i> Tour 360°
+                                </button>
+                                <button class="btn-gallery" onclick="openModal('/assets/kantin.jpg')">
+                                    <i class="fas fa-expand"></i> Galeri
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Card 5 -->
+                    <div class="room-card" data-room-name="aula" data-room-type="fasilitas" data-has-360="true" data-aos="zoom-in" data-aos-delay="700">
+                        <div class="room-image-container">
+                            <img src="/assets/aula.jpg" alt="Aula" class="room-image" onclick="openModal('/assets/aula.jpg')">
+                            <div class="room-overlay">
+                                <i class="fas fa-search-plus"></i> Klik untuk memperbesar
+                            </div>
+                            <div class="room-badge">Multipurpose</div>
+                        </div>
+                        <div class="room-content">
+                            <h5 class="room-title">Aula Serbaguna Premium</h5>
+                            <p class="room-description">Auditorium berkapasitas 500 orang dengan stage lighting professional, sound system concert-grade, dan sistem live streaming terintegrasi.</p>
+                            <div class="room-features">
+                                <span class="feature-tag"><i class="fas fa-users"></i> 500 Kapasitas</span>
+                                <span class="feature-tag"><i class="fas fa-microphone"></i> Pro Audio</span>
+                                <span class="feature-tag"><i class="fas fa-lightbulb"></i> Stage Light</span>
+                                <span class="feature-tag"><i class="fas fa-video"></i> Live Stream</span>
+                            </div>
+                            <div class="room-actions">
+                                <button class="btn-360" onclick="open360Viewer('/assets/aula_360.jpg', 'Aula Serbaguna - 360°')">
+                                    <i class="fas fa-vr-cardboard"></i> Tour 360°
+                                </button>
+                                <button class="btn-gallery" onclick="openModal('/assets/aula.jpg')">
+                                    <i class="fas fa-expand"></i> Galeri
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Card 6 -->
+                    <div class="room-card" data-room-name="lab fisika" data-room-type="laboratorium" data-has-360="true" data-aos="zoom-in" data-aos-delay="800">
+                        <div class="room-image-container">
+                            <img src="/assets/lab_fisika.jpg" alt="Lab Fisika" class="room-image" onclick="openModal('/assets/lab_fisika.jpg')">
+                            <div class="room-overlay">
+                                <i class="fas fa-search-plus"></i> Klik untuk memperbesar
+                            </div>
+                            <div class="room-badge">Science</div>
+                          </div>
+                        <div class="room-content">
+                            <h5 class="room-title">Laboratorium Fisika Advanced</h5>
+                            <p class="room-description">Lab fisika berstandar internasional dengan peralatan eksperimen canggih, microscope digital, oscilloscope, dan simulator quantum mechanics untuk penelitian tingkat lanjut.</p>
+                            <div class="room-features">
+                                <span class="feature-tag"><i class="fas fa-atom"></i> Quantum Sim</span>
+                                <span class="feature-tag"><i class="fas fa-microscope"></i> Digital Scope</span>
+                                <span class="feature-tag"><i class="fas fa-wave-square"></i> Oscilloscope</span>
+                                <span class="feature-tag"><i class="fas fa-flask"></i> Lab Tools</span>
+                            </div>
+                            <div class="room-actions">
+                                <button class="btn-360" onclick="open360Viewer('/assets/lab_fisika_360.jpg', 'Lab Fisika Advanced - 360°')">
+                                    <i class="fas fa-vr-cardboard"></i> Tour 360°
+                                </button>
+                                <button class="btn-gallery" onclick="openModal('/assets/lab_fisika.jpg')">
+                                    <i class="fas fa-expand"></i> Galeri
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Card 7 -->
+                    <div class="room-card" data-room-name="studio musik" data-room-type="fasilitas" data-has-360="true" data-aos="zoom-in" data-aos-delay="900">
+                        <div class="room-image-container">
+                            <img src="/assets/studio_musik.jpg" alt="Studio Musik" class="room-image" onclick="openModal('/assets/studio_musik.jpg')">
+                            <div class="room-overlay">
+                                <i class="fas fa-search-plus"></i> Klik untuk memperbesar
+                            </div>
+                            <div class="room-badge">Creative</div>
+                        </div>
+                        <div class="room-content">
+                            <h5 class="room-title">Studio Musik & Recording</h5>
+                            <p class="room-description">Studio musik profesional dengan akustik treatment premium, full band equipment, recording booth, dan mixing console 24-channel untuk produksi musik berkualitas studio.</p>
+                            <div class="room-features">
+                                <span class="feature-tag"><i class="fas fa-music"></i> Full Band</span>
+                                <span class="feature-tag"><i class="fas fa-microphone-alt"></i> Recording</span>
+                                <span class="feature-tag"><i class="fas fa-sliders-h"></i> Mixing Console</span>
+                                <span class="feature-tag"><i class="fas fa-headphones"></i> Pro Audio</span>
+                            </div>
+                            <div class="room-actions">
+                                <button class="btn-360" onclick="open360Viewer('/assets/studio_musik_360.jpg', 'Studio Musik - 360°')">
+                                    <i class="fas fa-vr-cardboard"></i> Tour 360°
+                                </button>
+                                <button class="btn-gallery" onclick="openModal('/assets/studio_musik.jpg')">
+                                    <i class="fas fa-expand"></i> Galeri
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Card 8 -->
+                    <div class="room-card" data-room-name="ruang guru" data-room-type="fasilitas" data-has-360="false" data-aos="zoom-in" data-aos-delay="1000">
+                        <div class="room-image-container">
+                            <img src="/assets/ruang_guru.jpg" alt="Ruang Guru" class="room-image" onclick="openModal('/assets/ruang_guru.jpg')">
+                            <div class="room-overlay">
+                                <i class="fas fa-search-plus"></i> Klik untuk memperbesar
+                            </div>
+                            <div class="room-badge">Faculty</div>
+                        </div>
+                        <div class="room-content">
+                            <h5 class="room-title">Ruang Guru Executive</h5>
+                            <p class="room-description">Ruang kerja guru dengan workspace ergonomis, meeting room kecil, printer center, coffee station, dan lounge area untuk diskusi kolaboratif antar pengajar.</p>
+                            <div class="room-features">
+                                <span class="feature-tag"><i class="fas fa-desk"></i> Workspace</span>
+                                <span class="feature-tag"><i class="fas fa-coffee"></i> Coffee Bar</span>
+                                <span class="feature-tag"><i class="fas fa-print"></i> Print Center</span>
+                                <span class="feature-tag"><i class="fas fa-couch"></i> Lounge</span>
+                            </div>
+                            <div class="room-actions">
+                                <button class="btn-gallery" onclick="openModal('/assets/ruang_guru.jpg')" style="flex: 1;">
+                                    <i class="fas fa-expand"></i> Lihat Detail
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 
+                    ═══════════════════════════════════════════════════════════════════
+                    PANDUAN MENAMBAH RUANGAN BARU (DEVELOPER GUIDE):
+                    
+                    1. STRUKTUR HTML:
+                       - Copy div dengan class="room-card" lengkap
+                       - Ganti data-room-name: nama ruangan (lowercase, spasi dengan dash)
+                       - Ganti data-room-type: "kelas"/"laboratorium"/"fasilitas"
+                       - Ganti data-has-360: "true"/"false" (ada foto 360° atau tidak)
+                       - Tambah data-aos-delay dengan increment +100 dari card sebelumnya
+                    
+                    2. KONTEN RUANGAN:
+                       - Ganti src image: /assets/[nama_file].jpg
+                       - Update alt, room-title sesuai nama ruangan
+                       - Tulis room-description yang menarik dan informatif
+                       - Update room-badge dengan kategori yang sesuai
+                    
+                    3. FITUR TAGS:
+                       - Gunakan icon Font Awesome yang relevan
+                       - Maksimal 4 feature-tag per ruangan
+                       - Singkat tapi deskriptif (contoh: "Smart Board", "WiFi", "AC")
+                    
+                    4. TOMBOL AKSI:
+                       - Jika ada 360°: tampilkan btn-360 dan btn-gallery
+                       - Jika tidak ada 360°: sembunyikan btn-360, buat btn-gallery full width
+                       - Update onclick dengan path file yang benar
+                    
+                    5. ANIMASI AOS:
+                       - Gunakan data-aos="zoom-in" untuk entrance animation
+                       - Increment data-aos-delay untuk staggered animation effect
+                    
+                    CONTOH PENAMBAHAN RUANGAN BARU:
+                    
+                    <div class="room-card" data-room-name="lab-kimia" data-room-type="laboratorium" data-has-360="true" data-aos="zoom-in" data-aos-delay="1100">
+                        <div class="room-image-container">
+                            <img src="/assets/lab_kimia.jpg" alt="Lab Kimia" class="room-image" onclick="openModal('/assets/lab_kimia.jpg')">
+                            <div class="room-overlay">
+                                <i class="fas fa-search-plus"></i> Klik untuk memperbesar
+                            </div>
+                            <div class="room-badge">Science</div>
+                        </div>
+                        <div class="room-content">
+                            <h5 class="room-title">Laboratorium Kimia</h5>
+                            <p class="room-description">Lab kimia dengan fume hood, peralatan analisis, dan safety system.</p>
+                            <div class="room-features">
+                                <span class="feature-tag"><i class="fas fa-flask"></i> Fume Hood</span>
+                                <span class="feature-tag"><i class="fas fa-shield-alt"></i> Safety</span>
+                                <span class="feature-tag"><i class="fas fa-vial"></i> Analisis</span>
+                                <span class="feature-tag"><i class="fas fa-fire-extinguisher"></i> Emergency</span>
+                            </div>
+                            <div class="room-actions">
+                                <button class="btn-360" onclick="open360Viewer('/assets/lab_kimia_360.jpg', 'Lab Kimia - 360°')">
+                                    <i class="fas fa-vr-cardboard"></i> Tour 360°
+                                </button>
+                                <button class="btn-gallery" onclick="openModal('/assets/lab_kimia.jpg')">
+                                    <i class="fas fa-expand"></i> Galeri
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    ═══════════════════════════════════════════════════════════════════
+                    -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="content-section" id="gallery">
+            <div class="container">
+                <h2 class="mb-5 text-center" style="font-size: 3rem; font-weight: 900; background: var(--secondary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" data-aos="fade-up">Galeri Dokumentasi</h2>
+                
+                <div class="gallery-grid">
+                    <div class="gallery-item" onclick="openModal('/assets/kelas1.jpg')" data-aos="fade-up" data-aos-delay="200">
+                        <img src="/assets/kelas1.jpg" alt="Kelas 1A Smart Classroom">
+                        <div class="gallery-overlay">
+                            <h6>Kelas 1A Smart Classroom</h6>
+                            <p>Ruang kelas dengan teknologi pembelajaran modern</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal('/assets/perpustakaan.jpg')" data-aos="fade-up" data-aos-delay="300">
+                        <img src="/assets/perpustakaan.jpg" alt="Perpustakaan Digital">
+                        <div class="gallery-overlay">
+                            <h6>Perpustakaan Digital</h6>
+                            <p>Pusat literasi dengan koleksi digital lengkap</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal('/assets/lab_komputer.jpg')" data-aos="fade-up" data-aos-delay="400">
+                        <img src="/assets/lab_komputer.jpg" alt="Lab Komputer">
+                        <div class="gallery-overlay">
+                            <h6>Lab Komputer & Coding</h6>
+                            <p>Laboratorium teknologi informasi modern</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal('/assets/kantin.jpg')" data-aos="fade-up" data-aos-delay="500">
+                        <img src="/assets/kantin.jpg" alt="Food Court">
+                        <div class="gallery-overlay">
+                            <h6>Food Court Modern</h6>
+                            <p>Area makan bergaya food court contemporary</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal('/assets/aula.jpg')" data-aos="fade-up" data-aos-delay="600">
+                        <img src="/assets/aula.jpg" alt="Aula Premium">
+                        <div class="gallery-overlay">
+                            <h6>Aula Serbaguna Premium</h6>
+                            <p>Auditorium dengan fasilitas concert-grade</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal('/assets/lab_fisika.jpg')" data-aos="fade-up" data-aos-delay="700">
+                        <img src="/assets/lab_fisika.jpg" alt="Lab Fisika">
+                        <div class="gallery-overlay">
+                            <h6>Lab Fisika Advanced</h6>
+                            <p>Laboratorium fisika berstandar internasional</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal('/assets/studio_musik.jpg')" data-aos="fade-up" data-aos-delay="800">
+                        <img src="/assets/studio_musik.jpg" alt="Studio Musik">
+                        <div class="gallery-overlay">
+                            <h6>Studio Musik & Recording</h6>
+                            <p>Studio produksi musik profesional</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item" onclick="openModal('/assets/ruang_guru.jpg')" data-aos="fade-up" data-aos-delay="900">
+                        <img src="/assets/ruang_guru.jpg" alt="Ruang Guru">
+                        <div class="gallery-overlay">
+                            <h6>Ruang Guru Executive</h6>
+                            <p>Workspace modern untuk para pengajar</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="content-section" id="about">
+            <div class="container">
+                <h2 class="mb-5 text-center" style="font-size: 3rem; font-weight: 900; background: var(--success); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" data-aos="fade-up">Tentang Proyek</h2>
+                
+                <div class="row mb-5">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="card" style="border: none; border-radius: 24px; box-shadow: var(--shadow-xl); background: rgba(255,255,255,0.95); backdrop-filter: blur(20px);" data-aos="fade-up" data-aos-delay="200">
+                            <div class="card-body p-5">
+                                <div class="text-center mb-4">
+                                    <div style="width: 100px; height: 100px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: var(--shadow-lg);">
+                                        <i class="fas fa-telescope fa-3x text-white"></i>
+                                    </div>
+                                </div>
+                                <h4 class="card-title text-center mb-4" style="font-weight: 700;">Tujuan Laporan Hasil Observasi</h4>
+                                <p class="card-text" style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary);">
+                                    Laporan Hasil Observasi (LHO) ruangan sekolah ini merupakan dokumentasi komprehensif yang bertujuan untuk menganalisis 
+                                    kondisi infrastruktur pendidikan secara mendalam. Dengan menggunakan teknologi dokumentasi 360°, analisis data visual, 
+                                    dan metodologi observasi sistematis, proyek ini memberikan insights berharga untuk:
+                                </p>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div style="width: 50px; height: 50px; background: var(--accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                                <i class="fas fa-chart-line text-white"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1" style="font-weight: 600;">Evaluasi Fasilitas</h6>
+                                                <small class="text-muted">Assessment kondisi dan kelayakan</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div style="width: 50px; height: 50px; background: var(--secondary); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                                <i class="fas fa-lightbulb text-white"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1" style="font-weight: 600;">Rekomendasi Peningkatan</h6>
+                                                <small class="text-muted">Saran pengembangan infrastruktur</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div style="width: 50px; height: 50px; background: var(--success); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                                <i class="fas fa-database text-white"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1" style="font-weight: 600;">Database Dokumentasi</h6>
+                                                <small class="text-muted">Arsip digital untuk referensi</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div style="width: 50px; height: 50px; background: var(--warning); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                                <i class="fas fa-cogs text-white"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1" style="font-weight: 600;">Perencanaan Strategis</h6>
+                                                <small class="text-muted">Blueprint development masa depan</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="mb-4 text-center" style="font-weight: 700;" data-aos="fade-up">Tim Kelompok 5 — Dream Team</h3>
+                <div class="team-grid">
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h5 class="team-name">Ahmad Rizki Maulana</h5>
+                        <p class="team-role">Project Leader & Documentation</p>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Koordinator utama proyek dengan expertise dalam manajemen dan dokumentasi systematic</p>
+                        <div class="team-social">
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <i class="fas fa-pen"></i>
+                        </div>
+                        <h5 class="team-name">Sari Indah Lestari</h5>
+                        <p class="team-role">Secretary & Content Writer</p>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Sekretaris tim dan content creator dengan skill menulis dan organizational yang excellent</p>
+                        <div class="team-social">
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-medium"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="500">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h5 class="team-name">Budi Santoso</h5>
+                        <p class="team-role">Visual Documentation Specialist</p>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Expert photographer dan videographer dengan specialization dalam 360° documentation</p>
+                        <div class="team-social">
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-behance"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="600">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h5 class="team-name">Maya Putri Salsabila</h5>
+                        <p class="team-role">Data Analyst & Research</p>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Data scientist dengan expertise dalam statistical analysis dan research methodology</p>
+                        <div class="team-social">
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-kaggle"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="700">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h5 class="team-name">Doni Pratama</h5>
+                        <p class="team-role">Field Survey Coordinator</p>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Field specialist dengan experience dalam survey methodology dan spatial analysis</p>
+                        <div class="team-social">
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member" data-aos="zoom-in" data-aos-delay="800">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <h5 class="team-name">Lisa Anjani</h5>
+                        <p class="team-role">Editor & Quality Assurance</p>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Editor profesional dengan eye for detail dan expertise dalam quality control processes</p>
+                        <div class="team-social">
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-behance"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Stats -->
+                <div class="row mt-5" data-aos="fade-up" data-aos-delay="900">
+                    <div class="col-12">
+                        <div class="card" style="border: none; border-radius: 24px; box-shadow: var(--shadow-xl); background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                            <div class="card-body p-5">
+                                <h4 class="text-center mb-4" style="font-weight: 700;">Statistik Proyek</h4>
+                                <div class="row text-center">
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="h2 mb-1" style="font-weight: 900;">72</div>
+                                        <div style="font-size: 0.9rem; opacity: 0.9;">Jam Observasi</div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="h2 mb-1" style="font-weight: 900;">450+</div>
+                                        <div style="font-size: 0.9rem; opacity: 0.9;">Foto Diambil</div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="h2 mb-1" style="font-weight: 900;">12</div>
+                                        <div style="font-size: 0.9rem; opacity: 0.9;">Video 360°</div>
+                                    </div>
+                                    <div class="col-md-3 col-6 mb-3">
+                                        <div class="h2 mb-1" style="font-weight: 900;">98%</div>
+                                        <div style="font-size: 0.9rem; opacity: 0.9;">Completion Rate</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">Kelompok 5</div>
+                <p style="margin-bottom: 2rem; opacity: 0.9;">Laporan Hasil Observasi Ruangan Sekolah</p>
+                <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
+                    <a href="#" style="color: rgba(255,255,255,0.7); font-size: 1.5rem; transition: color 0.3s ease;"><i class="fab fa-github"></i></a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); font-size: 1.5rem; transition: color 0.3s ease;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); font-size: 1.5rem; transition: color 0.3s ease;"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); font-size: 1.5rem; transition: color 0.3s ease;"><i class="fab fa-youtube"></i></a>
+                </div>
+                <p style="margin: 0; opacity: 0.7;">&copy; 2024 Dibuat dengan ❤️ oleh Kelompok 5 — Sekolah Modern Indonesia</p>
+                <small style="opacity: 0.5; display: block; margin-top: 1rem;">Last updated: August 29, 2024 | Version 2.0</small>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" src="" alt="" style="border-radius: 16px;">
+        </div>
+    </div>
+
+    <!-- 360 Viewer Modal -->
+    <div id="viewer360Modal" class="modal">
+        <div class="modal-content" style="background: #000; border-radius: 20px;">
+            <span class="close" onclick="close360Viewer()">&times;</span>
+            <div id="panorama" class="viewer-360"></div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Pannellum JS -->
+    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
+        });
+
+        // DOM Elements
+        const loadingScreen = document.getElementById('loadingScreen');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const mainContent = document.getElementById('mainContent');
+        const header = document.getElementById('header');
+        const themeToggle = document.getElementById('themeToggle');
+        const scrollTop = document.getElementById('scrollTop');
+        const navItems = document.querySelectorAll('.nav-item');
+        const contentSections = document.querySelectorAll('.content-section');
+        const roomCards = document.querySelectorAll('.room-card');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const particles = document.getElementById('particles');
+
+        // Loading Screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 1500);
+        });
+
+        // Create Floating Particles
+        function createParticles() {
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        // Sidebar Toggle
+        menuToggle.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', closeSidebar);
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            mainContent.classList.toggle('sidebar-open');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            mainContent.classList.remove('sidebar-open');
+        }
+
+        // Theme Toggle
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = themeToggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        });
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+                scrollTop.classList.add('visible');
+            } else {
+                header.classList.remove('scrolled');
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        // Scroll to Top
+        scrollTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Navigation
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetSection = item.getAttribute('data-section');
+                showSection(targetSection);
+                
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+                
+                if (window.innerWidth <= 768) {
+                    closeSidebar();
+                }
+                
+                window.location.hash = targetSection;
+            });
+        });
+
+        // Handle button clicks with data-section
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('[data-section]') || e.target.closest('[data-section]')) {
+                e.preventDefault();
+                const button = e.target.matches('[data-section]') ? e.target : e.target.closest('[data-section]');
+                const targetSection = button.getAttribute('data-section');
+                showSection(targetSection);
+                
+                navItems.forEach(nav => nav.classList.remove('active'));
+                const activeNav = document.querySelector(`.nav-item[data-section="${targetSection}"]`);
+                if (activeNav) {
+                    activeNav.classList.add('active');
+                }
+                
+                window.location.hash = targetSection;
+            }
+        });
+
+        function showSection(sectionId) {
+            contentSections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                
+                if (sectionId === 'rooms') {
+                    setTimeout(revealRoomCards, 100);
+                }
+            }
+        }
+
+        // Reveal room cards animation
+        function revealRoomCards() {
+            roomCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('visible');
+                }, index * 100);
+            });
+        }
+
+        // Filter functionality
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.getAttribute('data-filter');
+                filterRoomsByType(filter);
+            });
+        });
+
+        function filterRoomsByType(filter) {
+            roomCards.forEach(card => {
+                let show = false;
+                
+                if (filter === 'all') {
+                    show = true;
+                } else if (filter === 'has-360') {
+                    show = card.getAttribute('data-has-360') === 'true';
+                } else {
+                    show = card.getAttribute('data-room-type') === filter;
+                }
+                
+                if (show) {
+                    card.style.display = 'block';
+                    setTimeout(() => card.classList.add('visible'), 100);
+                } else {
+                    card.style.display = 'none';
+                    card.classList.remove('visible');
+                }
+            });
+        }
+
+        // Enhanced Search functionality
+        function filterRooms() {
+            const searchInput = document.getElementById('searchInput');
+            const searchTerm = searchInput.value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+            
+            roomCards.forEach(card => {
+                const roomName = card.getAttribute('data-room-name').toLowerCase();
+                const roomType = card.getAttribute('data-room-type').toLowerCase();
+                const roomTitle = card.querySelector('.room-title').textContent.toLowerCase();
+                const roomDesc = card.querySelector('.room-description').textContent.toLowerCase();
+                const features = Array.from(card.querySelectorAll('.feature-tag')).map(tag => tag.textContent.toLowerCase());
+                
+                const matchesSearch = roomName.includes(searchTerm) || 
+                                    roomType.includes(searchTerm) || 
+                                    roomTitle.includes(searchTerm) ||
+                                    roomDesc.includes(searchTerm) ||
+                                    features.some(feature => feature.includes(searchTerm));
+                
+                let matchesFilter = false;
+                if (activeFilter === 'all') {
+                    matchesFilter = true;
+                } else if (activeFilter === 'has-360') {
+                    matchesFilter = card.getAttribute('data-has-360') === 'true';
+                } else {
+                    matchesFilter = card.getAttribute('data-room-type') === activeFilter;
+                }
+                
+                if (matchesSearch && matchesFilter) {
+                    card.style.display = 'block';
+                    setTimeout(() => card.classList.add('visible'), 100);
+                } else {
+                    card.style.display = 'none';
+                    card.classList.remove('visible');
+                }
+            });
+        }
+
+        // Counter Animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-count]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    counter.textContent = Math.floor(current);
+                }, 16);
+            });
+        }
+
+        // Modal functionality
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            
+            modalImage.src = imageSrc;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // 360 Viewer functionality
+        let panoramaViewer = null;
+
+        function open360Viewer(imageSrc, title) {
+            const modal = document.getElementById('viewer360Modal');
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                if (panoramaViewer) {
+                    panoramaViewer.destroy();
+                }
+                
+                panoramaViewer = pannellum.viewer('panorama', {
+                    type: 'equirectangular',
+                    panorama: imageSrc,
+                    autoLoad: true,
+                    title: title,
+                    author: 'Kelompok 5',
+                    compass: true,
+                    northOffset: 0,
+                    showZoomCtrl: true,
+                    showFullscreenCtrl: true,
+                    mouseZoom: true,
+                    doubleClickZoom: true,
+                    keyboardZoom: true,
+                    autoRotate: -2,
+                    pitch: 0,
+                    yaw: 0,
+                    hfov: 100
+                });
+            }, 100);
+        }
+
+        function close360Viewer() {
+            const modal = document.getElementById('viewer360Modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            if (panoramaViewer) {
+                panoramaViewer.destroy();
+                panoramaViewer = null;
+            }
+        }
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                close360Viewer();
+                closeSidebar();
+            }
+        });
+
+        // Click outside modal to close
+        window.addEventListener('click', (e) => {
+            const imageModal = document.getElementById('imageModal');
+            const viewer360Modal = document.getElementById('viewer360Modal');
+            
+            if (e.target === imageModal) {
+                closeModal();
+            }
+            
+            if (e.target === viewer360Modal) {
+                close360Viewer();
+            }
+        });
+
+        // Handle hash navigation on load
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.slice(1) || 'home';
+            showSection(hash);
+            
+            navItems.forEach(nav => nav.classList.remove('active'));
+            const activeNav = document.querySelector(`[data-section="${hash}"]`);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+            
+            // Start counter animation when stats are visible
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            const statsSection = document.querySelector('.stats-section');
+            if (statsSection) {
+                statsObserver.observe(statsSection);
+            }
+        });
+
+        // Handle hash changes
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.slice(1) || 'home';
+            showSection(hash);
+            
+            navItems.forEach(nav => nav.classList.remove('active'));
+            const activeNav = document.querySelector(`[data-section="${hash}"]`);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+        });
+
+        // Responsive behavior
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                overlay.classList.remove('active');
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            
+            const hash = window.location.hash.slice(1) || 'home';
+            showSection(hash);
+            
+            navItems.forEach(nav => nav.classList.remove('active'));
+            const activeNav = document.querySelector(`[data-section="${hash}"]`);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+            
+            // Initial reveal of room cards
+            setTimeout(revealRoomCards, 1000);
+        });
+
+        // Performance optimization
+        let ticking = false;
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateScrollEffects);
+                ticking = true;
+            }
+        }
+
+        function updateScrollEffects() {
+            const scrollY = window.scrollY;
+            
+            // Update header
+            if (scrollY > 100) {
+                header.classList.add('scrolled');
+                scrollTop.classList.add('visible');
+            } else {
+                header.classList.remove('scrolled');
+                scrollTop.classList.remove('visible');
+            }
+            
+            // Parallax effect for hero
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                const scrolled = window.pageYOffset;
+                const parallax = scrolled * 0.5;
+                hero.style.transform = `translateY(${parallax}px)`;
+            }
+            
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', requestTick);
+
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add easter egg
+        let konamiCode = [];
+        const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.keyCode);
+            if (konamiCode.length > konamiSequence.length) {
+                konamiCode.shift();
+            }
+            
+            if (konamiCode.join(',') === konamiSequence.join(',')) {
+                // Easter egg activated
+                document.body.style.filter = 'hue-rotate(180deg)';
+                setTimeout(() => {
+                    document.body.style.filter = '';
+                }, 3000);
+                
+                // Show special message
+                const message = document.createElement('div');
+                message.textContent = '🎉 Kode rahasia ditemukan! Kelompok 5 rules! 🎉';
+                message.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 2rem;
+                    border-radius: 20px;
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                    z-index: 10000;
+                    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+                    animation: bounce 0.5s ease;
+                `;
+                document.body.appendChild(message);
+                
+                setTimeout(() => {
+                    message.remove();
+                }, 3000);
+                
+                konamiCode = [];
+            }
+        });
+    </script>
+</body>
+</html>
